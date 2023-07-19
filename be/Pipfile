@@ -24,6 +24,8 @@ sqlalchemy-utils = "*"
 pydantic = {extras = ["dotenv"], version = "==1.10.8"}
 asyncpg = "*"
 dependency-injector = "*"
+humps = "*"
+greenlet = "*"
 
 [pipenv]
 allow_prereleases = true
