@@ -1,0 +1,40 @@
+<button *ngIf="!isOnRootLevel" (click)="goToTop()">Go to top level</button>
+
+<ul>
+  <ng-container
+    *ngFor="let node of root"
+    [ngTemplateOutlet]="treeNode"
+    [ngTemplateOutletContext]="{ $implicit: node }">
+  </ng-container>
+</ul>
+<ng-template #treeNode let-node>
+  <li>
+    <div>
+      <p>{{node.name}}</p>
+      <button *ngIf="isOnRootLevel" (click)="goToChildNode(node.id)">Go there</button>
+      <button (click)="deleteNode(node.id, node.name)">Delete {{node.name}} node</button>
+      <p>{{node.createdAt | date: 'MM/dd/yyyy hh:mm a'}}</p>
+      <p>Properties:</p>
+      <button (click)="createProperty(node.id)">Create property</button>
+      <ul *ngFor="let property of node.properties">
+        <li>
+          <p>{{property.name}}</p>
+          <p>{{property.value | number : '1.3-3'}}</p>
+          <p>{{property.createdAt | date: 'MM/dd/yyyy hh:mm a'}}</p>
+          <button (click)="deleteProperty(property.id, property.name)">Delete {{property.name}} property</button>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <p>Children:</p>
+  <button (click)="createChildNode(node.id)">Create child node</button>
+  <ng-container *ngIf="node.children">
+    <ul>
+      <ng-container
+        *ngFor="let child of node.children"
+        [ngTemplateOutlet]="treeNode"
+        [ngTemplateOutletContext]="{ $implicit: child }">
+      </ng-container>
+    </ul>
+  </ng-container>
+</ng-template>

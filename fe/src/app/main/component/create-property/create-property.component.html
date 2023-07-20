@@ -1,0 +1,40 @@
+<div>
+  <div class="offcanvas-header">
+    <h4 class="offcanvas-title" id="offcanvas-basic-title">Create new Property</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeOffCanvas.dismiss()"></button>
+  </div>
+  <form (ngSubmit)="save()" [formGroup]="rocketPropertyForm">
+    <div class="offcanvas-body">
+
+      <div class="mb-3">
+        <label for="property-name">Property name</label>
+        <div class="input-group">
+          <input
+            id="property-name"
+            class="form-control"
+            formControlName="name"
+            placeholder="Enter property name"
+            autocomplete="off"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="property-value">Property value</label>
+        <div class="input-group">
+          <input
+            id="property-value"
+            class="form-control"
+            formControlName="value"
+            placeholder="Enter property value"
+            autocomplete="off"
+            type="number"
+          />
+        </div>
+      </div>
+      <div class="text-end">
+        <button type="submit" class="btn btn-outline-dark">Create</button>
+      </div>
+    </div>
+  </form>
+</div>
