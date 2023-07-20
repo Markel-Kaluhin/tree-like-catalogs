@@ -17,7 +17,7 @@ async def general_exception_handler(_: Request, exc: Exception) -> JSONResponse:
         Notification(
             type=NotificationType.error,
             payload=NotificationPayload(
-                status=0, code=status_code, message=str(", ".join([i["msg"] for i in exc._errors])), title="Server Error"
+                status=0, code=status_code, message=str(exc), title="Server Error"
             ),
         ).json()
     )

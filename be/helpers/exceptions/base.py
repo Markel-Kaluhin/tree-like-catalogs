@@ -12,9 +12,9 @@ class BaseServiceException(HTTPException):
         code: int,
         status: int,
         url: Optional[str] = None,
-        custom_message: Optional[str] = None,
+        custom_message: Optional[str] = "Base Exception",
     ) -> None:
-        super().__init__(status_code=code, detail="Base Exception")
+        super().__init__(status_code=code, detail=custom_message)
         self.title = title
         self.url = url
         self.status = status

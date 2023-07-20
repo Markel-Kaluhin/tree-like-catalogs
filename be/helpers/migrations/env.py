@@ -7,10 +7,7 @@ from alembic import context
 from sqlalchemy.engine import Engine
 
 from helpers.entity.sql_engine import async_engine
-from helpers.models import (
-    Base,
-    rocket,
-)  # noqa: F401
+from helpers.models import Base, rocket  # noqa: F401
 from settings.base import build_sqlalchemy_database_uri
 
 config = context.config
