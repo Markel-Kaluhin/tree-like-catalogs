@@ -1,7 +1,7 @@
 from typing import List, Optional, Tuple, Type
 
 from pydantic import BaseModel
-from sqlalchemy import and_, select
+from sqlalchemy import and_, select, delete
 
 from helpers.entity.sql_engine import async_session
 from helpers.entity.sql_entity import SqlEntity
@@ -20,7 +20,6 @@ class RocketRepository:
         schema: Type[BaseModel],
         config: Settings,
     ) -> None:
-        super().__init__(model, factory, schema)
         self.model = model
         self.factory = factory
         self.schema = schema
@@ -122,3 +121,31 @@ class RocketRepository:
             )
             node = node.scalar()
         return node, new_property
+
+    async def delete_node(
+        self, node_id_list: List[int]
+    ) -> bool:
+        async with async_session() as session:
+            await session.execute(
+                delete(
+                    RocketNode
+                ).where(
+                    RocketNode.id.in_(node_id_list)
+                )
+            )
+            await session.commit()
+            return True
+
+    async def delete_property(
+        self, property_id: int
+    ) -> bool:
+        async with async_session() as session:
+            await session.execute(
+                delete(
+                    RocketProperty
+                ).where(
+                    RocketProperty.id == property_id
+                )
+            )
+            await session.commit()
+            return True

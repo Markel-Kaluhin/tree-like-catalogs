@@ -74,6 +74,7 @@ class RocketFactory:
             if _rocket_node_id is not None and rocket_node_id == _rocket_node_id:
                 result.append(
                     RockerPropertySchema(
+                        id=property_id,
                         name=property_name,
                         value=property_value,
                         created_at=property_created_at,

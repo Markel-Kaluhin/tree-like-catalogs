@@ -57,5 +57,12 @@ class RocketService:
             result.properties.append(new_property)
         return result
 
+    async def delete_node(self, node_id: int):
+        node_id_list = list(set(i[0] for i in await self.repository.get_node_list_by_node_id(node_id)))
+        return await self.repository.delete_node(node_id_list=node_id_list)
+
+    async def delete_property(self, property_id: int):
+        return await self.repository.delete_property(property_id=property_id)
+
     def __get_path(self, route_path: str) -> List[str]:
         return [i for i in route_path.split("/") if i != ""]
