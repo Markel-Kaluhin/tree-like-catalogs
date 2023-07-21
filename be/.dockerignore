@@ -3,7 +3,5 @@
 .gitignore
 .idea
 .pre-commit-config.yaml
-entrypoint.sh
 Dockerfile*
-Jenkinsfile
 wait

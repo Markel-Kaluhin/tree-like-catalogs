@@ -9,23 +9,24 @@ coverage = "==7.2.7"
 flake8 = "==6.0.0"
 isort = "==5.12.0"
 mypy = "==1.4.1"
-pre-commit = "*"
+pre-commit = "==3.3.3"
 pylint = "==3.0.0a5"
 pytest = "==7.4.0"
 black = "==23.7.0"
-alembic = "==1.11.1"
 
 [packages]
-fastapi = "*"
-fastapi-utils = "*"
-uvicorn = "*"
-sqlalchemy = "*"
-sqlalchemy-utils = "*"
-pydantic = {extras = ["dotenv"], version = "==1.10.8"}
-asyncpg = "*"
-dependency-injector = "*"
-humps = "*"
-greenlet = "*"
+fastapi = "==0.100.0"
+fastapi-utils = "==0.2.1"
+uvicorn = "==0.23.1"
+sqlalchemy = "==1.4.49"
+sqlalchemy-utils = "==0.41.1"
+pydantic = {extras = ["dotenv"], version = "==1.10.0"}
+asyncpg = "==0.28.0"
+dependency-injector = "==4.41.0"
+humps = "==0.2.2"
+greenlet = "==3.0.0a1"
+gunicorn = "==21.2.0"
+alembic = "==1.11.1"
 
 [pipenv]
 allow_prereleases = true
