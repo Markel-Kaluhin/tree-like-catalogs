@@ -21,6 +21,6 @@ class RocketNodeSchema(BaseServiceModel):
     id: int
     parent_id: Optional[int]
     name: str
-    children: Optional[List['RocketNodeSchema']] = Field(default_factory=list)
+    children: Optional[List["RocketNodeSchema"]] = Field(default_factory=list)
     properties: Optional[List[RockerPropertySchema]] = Field(default_factory=list)
     created_at: datetime

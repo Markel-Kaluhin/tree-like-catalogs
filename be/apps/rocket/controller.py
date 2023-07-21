@@ -7,10 +7,7 @@ from fastapi_utils.inferring_router import InferringRouter
 
 from apps.container import Container
 from apps.rocket.service import RocketService
-from helpers.schemas.rocket.schema import (
-    RockerPropertyCreateSchema,
-    RocketNodeSchema,
-)
+from helpers.schemas.rocket.schema import RockerPropertyCreateSchema, RocketNodeSchema
 
 router = InferringRouter()
 
@@ -59,9 +56,7 @@ class RocketController:
         status_code=200,
     )
     async def delete_node(self, node_id: int) -> bool:
-        result: bool = await self.rocket_service.delete_node(
-            node_id=node_id
-        )
+        result: bool = await self.rocket_service.delete_node(node_id=node_id)
         return result
 
     @router.delete(
