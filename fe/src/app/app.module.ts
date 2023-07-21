@@ -13,14 +13,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateNodeComponent } from './main/component/create-node/create-node.component';
 import { CreatePropertyComponent } from './main/component/create-property/create-property.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import {DecimalPipe} from "@angular/common";
+import {RelativeTimePipe} from "./shared/pipe/relative-time.pipe";
 
 @NgModule({
-  declarations: [
-    MainComponent,
-    CreateNodeComponent,
-    CreatePropertyComponent,
-  ],
+    declarations: [
+        MainComponent,
+        CreateNodeComponent,
+        CreatePropertyComponent,
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -33,7 +33,7 @@ import {DecimalPipe} from "@angular/common";
         NgbModule,
         ReactiveFormsModule,
     ],
-  providers: [DecimalPipe],
+  providers: [RelativeTimePipe],
   bootstrap: [MainComponent]
 })
 export class AppModule { }
