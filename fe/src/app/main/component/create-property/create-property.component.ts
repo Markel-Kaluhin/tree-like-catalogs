@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {NgbActiveOffcanvas} from "@ng-bootstrap/ng-bootstrap";
-import {DecimalPipe} from "@angular/common";
 
 @Component({
   selector: 'app-create-property',
@@ -14,7 +13,6 @@ export class CreatePropertyComponent {
   constructor(
     private formBuilder: UntypedFormBuilder,
     public activeOffCanvas: NgbActiveOffcanvas,
-    private decimalPipe: DecimalPipe
   ) {}
 
   ngOnInit(): void {
@@ -29,9 +27,4 @@ export class CreatePropertyComponent {
       this.rocketPropertyForm.value
     )
   }
-
-  // public formatInput(){
-  //   const control = this.rocketPropertyForm.get('value')
-  //   control.setValue(this.decimalPipe.transform(control.value, '1.0-3'))// = this.decimalPipe.transform(control.value, '1.3-3')
-  // }
 }

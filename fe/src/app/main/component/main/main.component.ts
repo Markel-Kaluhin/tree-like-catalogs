@@ -8,11 +8,13 @@ import {NgbModal, NgbOffcanvas} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationModalComponent} from "../../../shared/component/confirmation/confirmation-modal.component";
 import {CreateNodeComponent} from "../create-node/create-node.component";
 import {CreatePropertyComponent} from "../create-property/create-property.component";
+import {RelativeTimePipe} from "../../../shared/pipe/relative-time.pipe";
 
 @Component({
   selector: 'app-root',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
+  providers: [RelativeTimePipe]
 })
 export class MainComponent {
   public root: RocketNodeModel[] = []
