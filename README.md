@@ -1,3 +1,4 @@
+[![Python application](https://github.com/Markel-Kaluhin/tree-like-catalogs/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Markel-Kaluhin/tree-like-catalogs/actions/workflows/build.yml)
 ![Tests Pass Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Markel-Kaluhin/e8d23650144c1dd611a941789d52721a/raw/tree-like-catalogs__tests_passed.json)
 ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Markel-Kaluhin/e8d23650144c1dd611a941789d52721a/raw/tree-like-catalogs__coverage.json)
 
