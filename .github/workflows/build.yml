@@ -17,13 +17,13 @@ jobs:
     env:
       working-directory: ./be
       SQLALCHEMY_HOST: ""
-      SQLALCHEMY_PORT: ""
+      SQLALCHEMY_PORT: 0
       SQLALCHEMY_DB_NAME: ""
       SQLALCHEMY_USER: ""
       SQLALCHEMY_PASSWORD: ""
       APP_HOST: ""
-      APP_PORT: ""
-      RELOAD_APP: ""
+      APP_PORT: 0
+      RELOAD_APP: 0
       ALLOW_ORIGINS: ""
       APPLICATION_NAME: ""
 
