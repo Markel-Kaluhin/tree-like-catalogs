@@ -1,3 +1,38 @@
+![Tests Pass Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Markel-Kaluhin/e8d23650144c1dd611a941789d52721a/raw/tree-like-catalogs__tests_passed.json)
+![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Markel-Kaluhin/e8d23650144c1dd611a941789d52721a/raw/tree-like-catalogs__coverage.json)
+
+# 🌳 Tree-like Catalogs
+*Designed by Markel Kaluhin 🎨*
+
+Email: [_markel.kaluhin@gmail.com_](mailto:markel.kaluhin@gmail.com) 📧
+
+
+## Description
+
+The project showcases a data management system for components of complex assemblies, organized in a tree-like structure. It allows efficient handling and organization of data related to various components and their relationships within complex assemblies.
+
+### Key Features
+1. Efficient Data Representation
+   - **Description**: Representing components of complex assemblies in a structured and intuitive tree format.
+   - **Implementation**: Utilizing a tree data structure to efficiently organize and visualize the relationships between components.
+
+1. Node Creation and Modification
+   - **Description**: Capability to create, edit, and manage nodes representing individual components or sub-assemblies within the system.
+   - **Implementation**: API endpoints allowing for the creation and modification of nodes and their attributes.
+ 
+1. Relationship Mapping
+   - **Description**: Mapping and managing relationships between different components, providing insights into the structure of complex assemblies.
+   - **Implementation**: Enabling the creation and visualization of relationships between nodes within the tree structure.
+
+1. Streamlined Data Access
+   - **Description**: Ensuring quick and easy access to relevant data for components, facilitating efficient decision-making and analysis.
+   - **Implementation**: Implementing APIs that enable swift retrieval and updating of component data.
+
+1. Error Handling and Validation
+   - **Description**: Implementing a robust system to handle errors and validate user inputs to maintain data integrity and accuracy.
+   - **Implementation**: Incorporating validation checks and error handling mechanisms within the API to provide a reliable user experience.
+
+
 ## Instructions on how to run each part of the challenge.
 ### Prerequisites:
 > To launch all parts of the application, namely the database, server, and WebUI at once, you need to use Docker Compose. The entire system is designed so that the user worries as little as possible about infrastructure matters.
@@ -29,53 +64,87 @@
 - **alembic** - Migration manager, has the ideal integration with SQLAlchemy
 - **coverage, flake8, isort, mypy, pre, pylint, pytest, black** - My gentleman's set of linters, no one project could be bootstrapped without it
 
-## Brief description of key challenges
-### Frontend side
-1. Since I was given two test tasks, I nevertheless integrated the client application with the server side
+# 📝 API Description
 
-### Backend side
-1. Instead of the described protocol, I developed my own, which provided a high level of entity control, reentrancy and reduced the complexity of the algorithms for its maintenance. That is, instead of this:
-```
-• "Engine1":
-    • "Thrust": 9.493
-    ...
-```
-I did this:
-```
-{
-    "id": 6,
-    "parentId": 4,
-    "name": "ICE",
-    "children": [],
-    "properties": [
-        {
-          "id": 1,
-          "name": "Torque",
-          "value": 180.500,
-          "createdAt": "2023-07-21T04:24:50.967985+00:00"
-        }
-    ],
-    "createdAt": "2023-07-21T04:24:50.967985+00:00"
-}
-```
-3. Slightly changed the structure of the API to avoid conflicts with important tools that I use in my work, such as Swagger. You can find the description of the API at this address `http://0.0.0.0:8080/docs`. Added `/api/non-flat-attrs/construction` to all endpoints of the task at the beginning
-   1. Where is `api` to avoid conflict with Swagger
-   1. `non-flat-attrs` to define the business object we are working with within this API
-   1. `construction` to avoid conflict with endpoints described below
-1. Added two new endpoints `/api/non-flat-attrs/node/{node_id}` and `/api/non-flat-attrs/property/{property_id}` with `HTTP` methods `DELETE` to delete properties and nodes
-1. Enriched the data model with the createdAt field because it was necessary to complete the frontend task, although it was not listed in the backend task
+>This API is built using FastAPI and follows the OpenAPI 3.1.0 specification.
 
-## Solution caveats and potential downfall
-Due to time constraints in the middle of the week, I had to make some choices, and one of the sacrifices I made was skipping unittests, which I usually write.
+## Endpoints
 
-However, I still took precautions and carefully tested my API for any unexpected behavior by making numerous requests with different scenarios. I addressed all the issues I encountered during testing.
+### Get Tree
+- **Endpoint:** `/api/non_flat_attrs/construction/{route_path}`
+- **HTTP Method:** GET
+- **Summary:** Get the tree structure.
+- **Parameters:**
+  - `route_path` (Path, String, Required): Route path for the construction.
+- **Responses:**
+  - 200: Successful response. Returns the tree structure in JSON format.
+  - 422: Validation error. Returns detailed validation errors in JSON format.
 
-As for the UI's interaction with the backend, I'm not overly concerned about unexpected behavior because the client doesn't utilize many of the API's capabilities. Therefore, I believe it should work smoothly for the specific use cases it handles.
+### Create Node
+- **Endpoint:** `/api/non_flat_attrs/construction/{route_path}`
+- **HTTP Method:** POST
+- **Summary:** Create a new node.
+- **Parameters:**
+  - `route_path` (Path, String, Required): Route path for the construction.
+- **Request Body:**
+  - JSON body with the properties of the node.
+- **Responses:**
+  - 200: Successful response. Returns the created node in JSON format.
+  - 422: Validation error. Returns detailed validation errors in JSON format.
 
-## What I'd do differently in a production environment
-1. I'd focus on improving the UI design to enhance the readability of elements. The current level is sufficient to demonstrate my skills and meet the immediate requirements, but it may not be enough for an industrial environment with numerous users
-1. Implement notifications for successful and unsuccessful operations on the UI, displaying them as toasts
-1. Write unit tests for all parts of the application, along with integration tests. I frequently use them to ensure the quality and reliability of my solutions
-1. Describe CI/CD based on either a version control system or specialized solutions
-1. Reworked the method `apps.non_flat_attrs.repository.RocketRepository.get_latest_node_id` to change the recursive requests to the subqueries set
-1. Would deploy an application in Kubernetes or Swarm in one of the clouds
+### Delete Node
+- **Endpoint:** `/api/non_flat_attrs/node/{node_id}`
+- **HTTP Method:** DELETE
+- **Summary:** Delete a node by ID.
+- **Parameters:**
+  - `node_id` (Path, Integer, Required): Node ID.
+- **Responses:**
+  - 200: Successful response. Returns `true` if the node was successfully deleted.
+  - 422: Validation error. Returns detailed validation errors in JSON format.
+
+### Delete Property
+- **Endpoint:** `/api/non_flat_attrs/property/{property_id}`
+- **HTTP Method:** DELETE
+- **Summary:** Delete a property by ID.
+- **Parameters:**
+  - `property_id` (Path, Integer, Required): Property ID.
+- **Responses:**
+  - 200: Successful response. Returns `true` if the property was successfully deleted.
+  - 422: Validation error. Returns detailed validation errors in JSON format.
+
+### Health Check
+- **Endpoint:** `/health`
+- **HTTP Method:** GET
+- **Summary:** Check the health of the API.
+- **Responses:**
+  - 200: Successful response. Returns the health status in JSON format.
+
+## Data Models
+
+### NonFlatAttrsNodeSchema
+- **Description:** Base model representing a node in the non-flat attributes tree.
+- **Properties:**
+  - `id` (Integer): Node ID.
+  - `parentId` (Integer): Parent Node ID.
+  - `name` (String): Node name.
+  - `children` (Array): Children nodes.
+  - `properties` (Array): Properties of the node.
+  - `createdAt` (String): Date and time of creation.
+- **Required Properties:** `id`, `name`, `createdAt`
+
+### NonFlatAttrsPropertyCreateSchema
+- **Description:** Base model for creating a property for a node in the non-flat attributes tree.
+- **Properties:**
+  - `id` (Integer): Property ID.
+  - `name` (String): Property name.
+  - `value` (Number): Property value.
+- **Required Properties:** `name`, `value`
+
+### NonFlatAttrsPropertySchema
+- **Description:** Base model representing a property of a node in the non-flat attributes tree.
+- **Properties:**
+  - `id` (Integer): Property ID.
+  - `name` (String): Property name.
+  - `value` (Number): Property value.
+  - `createdAt` (String): Date and time of creation.
+- **Required Properties:** `name`, `value`, `createdAt`

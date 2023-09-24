@@ -1,0 +1,85 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Python application
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./be
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install pipenv setuptools
+        python -m pip install --upgrade pipenv
+        pipenv install --system --deploy --dev
+      working-directory: ${{env.working-directory}}
+    # - name: Lint all set of linters
+    #   run: |
+    #     pipenv run lint
+    - name: Test with pytest
+      run: |
+        echo "TESTS_PASSED=false" >> $GITHUB_ENV
+        pipenv run unit
+        echo "TESTS_PASSED=true" >> $GITHUB_ENV
+      working-directory: ${{env.working-directory}}
+    - name: Count coverage
+      run: |
+        echo "COVERAGE=$(pipenv run coverage | awk '$1 == "TOTAL" {print $NF+0}')" >> $GITHUB_ENV
+      working-directory: ${{env.working-directory}}
+#    - name: Create Linters Badge
+#      uses: schneegans/dynamic-badges-action@v1.6.0
+#      with:
+#        auth: ${{ secrets.GIST_SECRET }}
+#        gistID: e8d23650144c1dd611a941789d52721a
+#        filename: coverage.json
+#        label: Linting
+#        message: ${{ env.COVERAGE }}
+#        namedLogo: pytest
+#        logoColor: lightblue
+#        valColorRange: ${{ env.COVERAGE }}
+#        maxColorRange: 100
+#        minColorRange: 50
+#       working-directory: ${{env.working-directory}}
+    - name: Create Test Pass Badge
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: e8d23650144c1dd611a941789d52721a
+        filename: tree-like-catalogs__tests_passed.json
+        label: Tests
+        message: ${{ env.TESTS_PASSED && 'PASSED' || 'FAILED' }}
+        namedLogo: pytest
+        logoColor: lightblue
+        valColorRange: ${{ env.TESTS_PASSED && 100 || 0 }}
+        maxColorRange: 100
+        minColorRange: 50
+    - name: Create Coverage Badge
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: e8d23650144c1dd611a941789d52721a
+        filename: tree-like-catalogs__coverage.json
+        label: Lines Coverage
+        message: ${{ env.COVERAGE }}
+        namedLogo: pytest
+        logoColor: lightblue
+        valColorRange: ${{ env.COVERAGE }}
+        maxColorRange: 100
+        minColorRange: 50
