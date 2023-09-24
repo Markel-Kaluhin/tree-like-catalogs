@@ -33,7 +33,7 @@ allow_prereleases = true
 
 [requires]
 python_version = "3.11"
-python_full_version = "3.11.4"
+python_full_version = "3.11.5"
 
 [scripts]
 unit = "coverage run -m pytest -vv -c ./setup.cfg --junitxml=./.pytest_cache/pytest_unit.xml"

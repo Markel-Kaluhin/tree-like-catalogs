@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './main/component/main/main.component';
-import * as fromRocket from './main/stores/rocket.reducers';
+import * as fromNonFlatAttrs from './main/stores/non-flat-attrs.reducers';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
-import {RocketEffects} from "./main/stores/rocket.effects";
+import {NonFlatAttrsEffects} from "./main/stores/non-flat-attrs.effects";
 import {HttpClientModule} from "@angular/common/http";
 import {SharedModule} from "./shared/shared.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -28,8 +28,8 @@ import {RelativeTimePipe} from "./shared/pipe/relative-time.pipe";
         SharedModule,
         StoreModule.forRoot({}, {}),
         EffectsModule.forRoot([]),
-        StoreModule.forFeature(fromRocket.featureKey, fromRocket.reducer),
-        EffectsModule.forFeature([RocketEffects]),
+        StoreModule.forFeature(fromNonFlatAttrs.featureKey, fromNonFlatAttrs.reducer),
+        EffectsModule.forFeature([NonFlatAttrsEffects]),
         NgbModule,
         ReactiveFormsModule,
     ],

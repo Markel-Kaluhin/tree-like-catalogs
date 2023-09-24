@@ -9,7 +9,7 @@ import {NgbActiveOffcanvas} from "@ng-bootstrap/ng-bootstrap";
 })
 export class CreateNodeComponent implements OnInit {
 
-  public rocketNodeForm: UntypedFormGroup;
+  public nonFlatAttrsNodeForm: UntypedFormGroup;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -17,14 +17,14 @@ export class CreateNodeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.rocketNodeForm = this.formBuilder.group({
+    this.nonFlatAttrsNodeForm = this.formBuilder.group({
       name: new UntypedFormControl('', [Validators.required]),
     })
   }
 
   public save() {
     this.activeOffCanvas.close(
-      this.rocketNodeForm.value
+      this.nonFlatAttrsNodeForm.value
     )
   }
 

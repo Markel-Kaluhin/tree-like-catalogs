@@ -5,7 +5,7 @@
 1. First, install Docker Compose. The page contains links to instructions for all common operating systems.
 1. Navigate to the root directory of the project.
 1. At this stage, please make sure that ports 80, 8080, and 5432 are available at the time of running my solution. They are all necessary for the application to work.
-1. Execute the command docker-compose up.
+1. Execute the command **`docker-compose up`**.
 1. Wait for all services to be built, and migrations to be applied.
 1. Open your browser and go to http://0.0.0.0 to see the results of the test task.
 
@@ -45,24 +45,24 @@ I did this:
 {
     "id": 6,
     "parentId": 4,
-    "name": "Engine1",
+    "name": "ICE",
     "children": [],
     "properties": [
         {
           "id": 1,
-          "name": "Thrust",
-          "value": 9.493,
+          "name": "Torque",
+          "value": 180.500,
           "createdAt": "2023-07-21T04:24:50.967985+00:00"
         }
     ],
     "createdAt": "2023-07-21T04:24:50.967985+00:00"
 }
 ```
-3. Slightly changed the structure of the API to avoid conflicts with important tools that I use in my work, such as Swagger. You can find the description of the API at this address `http://0.0.0.0:8080/docs`. Added `/api/rocket/construction` to all endpoints of the task at the beginning
+3. Slightly changed the structure of the API to avoid conflicts with important tools that I use in my work, such as Swagger. You can find the description of the API at this address `http://0.0.0.0:8080/docs`. Added `/api/non-flat-attrs/construction` to all endpoints of the task at the beginning
    1. Where is `api` to avoid conflict with Swagger
-   1. `rocket` to define the business object we are working with within this API
+   1. `non-flat-attrs` to define the business object we are working with within this API
    1. `construction` to avoid conflict with endpoints described below
-1. Added two new endpoints `/api/rocket/node/{node_id}` and `/api/rocket/property/{property_id}` with `HTTP` methods `DELETE` to delete properties and nodes
+1. Added two new endpoints `/api/non-flat-attrs/node/{node_id}` and `/api/non-flat-attrs/property/{property_id}` with `HTTP` methods `DELETE` to delete properties and nodes
 1. Enriched the data model with the createdAt field because it was necessary to complete the frontend task, although it was not listed in the backend task
 
 ## Solution caveats and potential downfall
@@ -77,5 +77,5 @@ As for the UI's interaction with the backend, I'm not overly concerned about une
 1. Implement notifications for successful and unsuccessful operations on the UI, displaying them as toasts
 1. Write unit tests for all parts of the application, along with integration tests. I frequently use them to ensure the quality and reliability of my solutions
 1. Describe CI/CD based on either a version control system or specialized solutions
-1. Reworked the method `apps.rocket.repository.RocketRepository.get_latest_node_id` to change the recursive requests to the subqueries set
+1. Reworked the method `apps.non_flat_attrs.repository.RocketRepository.get_latest_node_id` to change the recursive requests to the subqueries set
 1. Would deploy an application in Kubernetes or Swarm in one of the clouds

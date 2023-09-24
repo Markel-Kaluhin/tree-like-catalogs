@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
 
-  database:
+  non-flat-attrs-database:
     image: postgres:15.3
-    container_name: database
+    container_name: non-flat-attrs-database
     restart: always
     ports:
       - 5432:5432
@@ -14,15 +14,15 @@ services:
       update_config:
         delay: 2s
     volumes:
-      - postgres:/var/lib/postgresql/data/pgdata
+      - non-flat-attrs-database:/var/lib/postgresql/data/pgdata
     environment:
-      - POSTGRES_PASSWORD=myverystrongpassword
+      - POSTGRES_DB=nonflatattrs
       - POSTGRES_USER=markelkaluhin
-      - POSTGRES_DB=rocketlab
+      - POSTGRES_PASSWORD=myverystrongpassword
       - PGDATA=/var/lib/postgresql/data/pgdata
 
-  be-rocket-lab-home-test:
-    image: be-rocket-lab-home-test:latest
+  be-non-flat-attrs-example:
+    image: be-non-flat-attrs-example:latest
     build:
       dockerfile: be/Dockerfile
     ports:
@@ -33,21 +33,20 @@ services:
       update_config:
         delay: 2s
     depends_on:
-      - database
+      - non-flat-attrs-database
     environment:
       - APP_HOST=0.0.0.0
       - APP_PORT=8080
-      - SQLALCHEMY_HOST=database
+      - SQLALCHEMY_HOST=non-flat-attrs-database
       - SQLALCHEMY_PORT=5432
-      - SQLALCHEMY_DB_NAME=rocketlab
       - SQLALCHEMY_USER=markelkaluhin
       - SQLALCHEMY_PASSWORD=myverystrongpassword
+      - SQLALCHEMY_DB_NAME=nonflatattrs
       - RELOAD_APP=0
       - ALLOW_ORIGINS=*
-      - APPLICATION_NAME=be-rocket-lab-home-test
-
-  fe-rocket-lab-home-test:
-    image: fe-rocket-lab-home-test:latest
+      - APPLICATION_NAME=be-non-flat-attrs-example
+  fe-non-flat-attrs-example:
+    image: fe-non-flat-attrs-example:latest
     build:
       dockerfile: fe/Dockerfile
     ports:
@@ -58,7 +57,7 @@ services:
       update_config:
         delay: 2s
     depends_on:
-      - be-rocket-lab-home-test
+      - be-non-flat-attrs-example
 
 volumes:
-  postgres:
+  non-flat-attrs-database:

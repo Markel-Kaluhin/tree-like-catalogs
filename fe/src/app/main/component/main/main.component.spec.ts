@@ -14,16 +14,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'fe-rocket-lab-home-test'`, () => {
-    const fixture = TestBed.createComponent(MainComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('fe-rocket-lab-home-test');
-  });
-
   it('should render title', () => {
     const fixture = TestBed.createComponent(MainComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('fe-rocket-lab-home-test app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('fe-non-flat-attrs-example app is running!');
   });
 });

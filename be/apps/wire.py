@@ -1,5 +1,5 @@
 from apps.container import Container
-from apps.rocket import controller as rocket_controller
+from apps.non_flat_attrs import controller as non_flat_attrs_controller
 from settings.base import settings
 
 
@@ -9,7 +9,7 @@ def wire_container() -> Container:
     container.config.from_value(settings)
     container.wire(
         modules=[
-            rocket_controller,
+            non_flat_attrs_controller,
         ]
     )
     return container

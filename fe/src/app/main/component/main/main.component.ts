@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import {RocketService} from "../../service/rocket.service";
-import {RocketNodeModel} from "../../models/rocket.modell";
+import {NonFlatAttrsService} from "../../service/non-flat-attrs.service";
+import {NonFlatAttrsNodeModel} from "../../models/non-flat-attrs.modell";
 import {Store} from "@ngrx/store";
-import * as RocketSelector from '../../stores/rocket.selectors'
-import * as RocketAction from '../../stores/rocket.actions'
+import * as NonFlatAttrsSelector from '../../stores/non-flat-attrs.selectors'
+import * as NonFlatAttrsAction from '../../stores/non-flat-attrs.actions'
 import {NgbModal, NgbOffcanvas} from "@ng-bootstrap/ng-bootstrap";
 import {ConfirmationModalComponent} from "../../../shared/component/confirmation/confirmation-modal.component";
 import {CreateNodeComponent} from "../create-node/create-node.component";
@@ -17,27 +17,27 @@ import {RelativeTimePipe} from "../../../shared/pipe/relative-time.pipe";
   providers: [RelativeTimePipe]
 })
 export class MainComponent {
-  public root: RocketNodeModel[] = []
+  public root: NonFlatAttrsNodeModel[] = []
   public isOnRootLevel: boolean = true;
-  private initialPath: string = 'Rocket'
+  private initialPath: string = 'ICE'
 
 
   constructor(
-    private rocketService: RocketService,
-    private rocketStore: Store<RocketNodeModel>,
+    private nonFlatAttrsService: NonFlatAttrsService,
+    private nonFlatAttrsStore: Store<NonFlatAttrsNodeModel>,
     private modalService: NgbModal,
     private offCanvasService: NgbOffcanvas,
   ) {
-    this.rocketStore.dispatch(RocketAction.getTree({ path: this.initialPath }));
-    this.subscribeToRocketStore();
+    this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.getTree({ path: this.initialPath }));
+    this.subscribeToNonFlatAttrsStore();
   }
 
-  private subscribeToRocketStore() {
-    this.rocketStore
-      .select(RocketSelector.rocketNode)
-      .subscribe(rocket => {
-        this.isOnRootLevel = rocket.name === this.initialPath
-        this.root = [rocket]
+  private subscribeToNonFlatAttrsStore() {
+    this.nonFlatAttrsStore
+      .select(NonFlatAttrsSelector.nonFlatAttrsNode)
+      .subscribe(nonFlatAttrs => {
+        this.isOnRootLevel = nonFlatAttrs.name === this.initialPath
+        this.root = [nonFlatAttrs]
       })
   }
 
@@ -48,7 +48,7 @@ export class MainComponent {
           let path = this.getPathByNodeId(this.root[0], nodeId)
           path.reverse()
           path = path.join('/')
-          this.rocketStore.dispatch(RocketAction.createNode({ path: path, rocketProperty: result }))
+          this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.createNode({ path: path, nonFlatAttrsProperty: result }))
         },
         (reason) => {},
     )
@@ -62,20 +62,20 @@ export class MainComponent {
           path.reverse()
           path.push(result.name)
           path = path.join('/')
-          this.rocketStore.dispatch(RocketAction.createNode({ path: path }))
+          this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.createNode({ path: path }))
         },
         (reason) => {},
     )
   }
 
   public goToTop() {
-    this.rocketStore.dispatch(RocketAction.getTree({ path: this.initialPath }));
+    this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.getTree({ path: this.initialPath }));
   }
 
   public goToChildNode(nodeId: number) {
     let path = this.getPathByNodeId(this.root[0], nodeId)
     path = path.reverse().join('/')
-    this.rocketStore.dispatch(RocketAction.getTree({ path: path }));
+    this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.getTree({ path: path }));
   }
 
   public deleteNode(nodeId: number, name: string) {
@@ -86,8 +86,8 @@ export class MainComponent {
     modalInstance.result.then(
         (result) => {
           if (result) {
-            this.rocketStore.dispatch(RocketAction.deleteNode({ nodeId: nodeId }))
-            this.rocketStore.dispatch(RocketAction.getTree({ path: this.initialPath }));
+            this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.deleteNode({ nodeId: nodeId }))
+            this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.getTree({ path: this.initialPath }));
           }},
         (reason) => {},
     )
@@ -101,14 +101,14 @@ export class MainComponent {
     modalInstance.result.then(
         (result) => {
           if (result) {
-            this.rocketStore.dispatch(RocketAction.deleteProperty({ propertyId: propertyId }));
-            this.rocketStore.dispatch(RocketAction.getTree({ path: this.initialPath }));
+            this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.deleteProperty({ propertyId: propertyId }));
+            this.nonFlatAttrsStore.dispatch(NonFlatAttrsAction.getTree({ path: this.initialPath }));
           }},
         (reason) => {},
     )
   }
 
-  private getPathByNodeId(node: RocketNodeModel, matchNodeId: number, result: string[] = []): any {
+  private getPathByNodeId(node: NonFlatAttrsNodeModel, matchNodeId: number, result: string[] = []): any {
     if (node?.id === matchNodeId) {
       result.push(node.name)
       matchNodeId = node.parentId

@@ -38,7 +38,7 @@ class BaseEntityException(BaseServiceException):
         )
 
 
-class RocketException(BaseEntityException):
+class NonFlatAttrsException(BaseEntityException):
     def __init__(
         self,
         code: int = 404,
@@ -46,10 +46,10 @@ class RocketException(BaseEntityException):
         custom_message: Optional[str] = None,
     ) -> None:
         super().__init__(
-            title="Rocker Exception",
+            title="NonFlatAttrs Exception",
             code=code,
             url=url,
-            status=ExceptionType.rocket,
+            status=ExceptionType.non_flat_attrs,
             custom_message=custom_message,
         )
 

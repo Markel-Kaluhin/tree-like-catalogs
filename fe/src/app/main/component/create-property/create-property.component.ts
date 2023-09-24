@@ -8,7 +8,7 @@ import {NgbActiveOffcanvas} from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ['./create-property.component.scss']
 })
 export class CreatePropertyComponent {
-  public rocketPropertyForm: UntypedFormGroup;
+  public nonFlatAttrsPropertyForm: UntypedFormGroup;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -16,7 +16,7 @@ export class CreatePropertyComponent {
   ) {}
 
   ngOnInit(): void {
-    this.rocketPropertyForm = this.formBuilder.group({
+    this.nonFlatAttrsPropertyForm = this.formBuilder.group({
       name: new UntypedFormControl('', [Validators.required]),
       value: new UntypedFormControl('', [Validators.required]),
     })
@@ -24,7 +24,7 @@ export class CreatePropertyComponent {
 
   public save(){
     this.activeOffCanvas.close(
-      this.rocketPropertyForm.value
+      this.nonFlatAttrsPropertyForm.value
     )
   }
 }

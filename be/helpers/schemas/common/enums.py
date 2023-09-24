@@ -2,5 +2,5 @@ import enum
 
 
 class ExceptionType(enum.IntEnum):
-    rocket = 1
+    non_flat_attrs = 1
     repository = 2
