@@ -1,41 +1,79 @@
-<button class="btn btn-outline-primary" *ngIf="!isOnRootLevel" (click)="goToTop()">Go to top level</button>
+<button
+  class="btn btn-outline-primary"
+  *ngIf="!isOnRootLevel"
+  (click)="goToTop()"
+>
+  Go to top level
+</button>
 
 <ul>
   <ng-container
     *ngFor="let node of root"
     [ngTemplateOutlet]="treeNode"
-    [ngTemplateOutletContext]="{ $implicit: node }">
+    [ngTemplateOutletContext]="{ $implicit: node }"
+  >
   </ng-container>
 </ul>
 <ng-template #treeNode let-node>
   <li>
     <div>
-      <p><b>{{node.name}}</b></p>
-      <button class="btn btn-outline-primary me-3" *ngIf="isOnRootLevel" (click)="goToChildNode(node.id)">Go there</button>
-      <button class="btn btn-outline-danger" (click)="deleteNode(node.id, node.name)">Delete {{node.name}}</button>
-      <p>{{node.createdAt | relativeTime}}</p>
+      <p>
+        <b>{{ node.name }}</b>
+      </p>
+      <button
+        class="btn btn-outline-primary me-3"
+        *ngIf="isOnRootLevel"
+        (click)="goToChildNode(node.id)"
+      >
+        Go there
+      </button>
+      <button
+        class="btn btn-outline-danger"
+        (click)="deleteNode(node.id, node.name)"
+      >
+        Delete {{ node.name }}
+      </button>
+      <p>{{ node.createdAt | relativeTime }}</p>
       <ul>
         <li>
           <p>Properties:</p>
-          <button class="btn btn-outline-primary" (click)="createProperty(node.id)">Create property</button>
+          <button
+            class="btn btn-outline-primary"
+            (click)="createProperty(node.id)"
+          >
+            Create property
+          </button>
         </li>
         <ul *ngFor="let property of node.properties">
           <li>
-            <p><b>{{property.name}}</b></p>
-            <p>{{property.value | number : '1.3-3'}}</p>
-            <p>{{property.createdAt | relativeTime}}</p>
-            <button class="btn btn-outline-danger" (click)="deleteProperty(property.id, property.name)">Delete {{property.name}}</button>
+            <p>
+              <b>{{ property.name }}</b>
+            </p>
+            <p>{{ property.value | number: "1.3-3" }}</p>
+            <p>{{ property.createdAt | relativeTime }}</p>
+            <button
+              class="btn btn-outline-danger"
+              (click)="deleteProperty(property.id, property.name)"
+            >
+              Delete {{ property.name }}
+            </button>
           </li>
         </ul>
         <li>
           <p>Children:</p>
-          <button class="btn btn-outline-primary" (click)="createChildNode(node.id)">Create child node</button>
+          <button
+            class="btn btn-outline-primary"
+            (click)="createChildNode(node.id)"
+          >
+            Create child node
+          </button>
           <ng-container *ngIf="node.children">
             <ul>
               <ng-container
                 *ngFor="let child of node.children"
                 [ngTemplateOutlet]="treeNode"
-                [ngTemplateOutletContext]="{ $implicit: child }">
+                [ngTemplateOutletContext]="{ $implicit: child }"
+              >
               </ng-container>
             </ul>
           </ng-container>

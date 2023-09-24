@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
-import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
-import {NgbActiveOffcanvas} from "@ng-bootstrap/ng-bootstrap";
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
-  styleUrls: ['./create-property.component.scss']
+  styleUrls: ['./create-property.component.scss'],
 })
 export class CreatePropertyComponent {
   public nonFlatAttrsPropertyForm: UntypedFormGroup;
@@ -19,12 +24,10 @@ export class CreatePropertyComponent {
     this.nonFlatAttrsPropertyForm = this.formBuilder.group({
       name: new UntypedFormControl('', [Validators.required]),
       value: new UntypedFormControl('', [Validators.required]),
-    })
+    });
   }
 
-  public save(){
-    this.activeOffCanvas.close(
-      this.nonFlatAttrsPropertyForm.value
-    )
+  public save() {
+    this.activeOffCanvas.close(this.nonFlatAttrsPropertyForm.value);
   }
 }

@@ -2,9 +2,9 @@ from typing import List
 
 from helpers.exceptions.base import NonFlatAttrsException
 from helpers.schemas.non_flat_attrs.schema import (
+    NonFlatAttrsNodeSchema,
     NonFlatAttrsPropertyCreateSchema,
     NonFlatAttrsPropertySchema,
-    NonFlatAttrsNodeSchema,
 )
 
 from .repository import NonFlatAttrsRepository
@@ -25,7 +25,9 @@ class NonFlatAttrsService:
                 custom_message="Node or property does not exist in this path"
             )
         node_list = await self.repository.get_node_list_by_node_id(latest_node_id)
-        result = self.repository.factory.serialize(node_list, non_flat_attrs_property, path)
+        result = self.repository.factory.serialize(
+            node_list, non_flat_attrs_property, path
+        )
         return result
 
     async def create(

@@ -1,13 +1,32 @@
 <div>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Confirm this operation</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
-	</div>
-	<div class="modal-body">
-		<p class="modal-title">Are you sure you want to {{ operation }} {{name}} {{type}}?</p>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-dark" (click)="activeModal.close(true)">Yes</button>
-		<button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)">No</button>
-	</div>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Confirm this operation</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeModal.dismiss()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p class="modal-title">
+      Are you sure you want to {{ operation }} {{ name }} {{ type }}?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="activeModal.close(true)"
+    >
+      Yes
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="activeModal.close(false)"
+    >
+      No
+    </button>
+  </div>
 </div>

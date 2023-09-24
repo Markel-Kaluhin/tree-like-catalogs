@@ -7,7 +7,10 @@ from fastapi_utils.inferring_router import InferringRouter
 
 from apps.container import Container
 from apps.non_flat_attrs.service import NonFlatAttrsService
-from helpers.schemas.non_flat_attrs.schema import NonFlatAttrsPropertyCreateSchema, NonFlatAttrsNodeSchema
+from helpers.schemas.non_flat_attrs.schema import (
+    NonFlatAttrsNodeSchema,
+    NonFlatAttrsPropertyCreateSchema,
+)
 
 router = InferringRouter()
 

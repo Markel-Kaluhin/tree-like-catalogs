@@ -74,9 +74,7 @@ class NonFlatAttrsRepository:
         async with async_session() as session:
             topq = (
                 session.sync_session.query(Node, Property)
-                .outerjoin(
-                    Property, Property.node_id == Node.id
-                )
+                .outerjoin(Property, Property.node_id == Node.id)
                 .filter(Node.id == node_id)
                 .order_by(Property.node_id)
                 .cte("cte", recursive=True)
@@ -84,9 +82,7 @@ class NonFlatAttrsRepository:
 
             bottomq = (
                 session.sync_session.query(Node, Property)
-                .outerjoin(
-                    Property, Property.node_id == Node.id
-                )
+                .outerjoin(Property, Property.node_id == Node.id)
                 .join(topq, Node.parent_id == topq.c.id)
                 .order_by(Property.node_id)
             )
@@ -116,17 +112,13 @@ class NonFlatAttrsRepository:
             session.add(new_property)
             await session.commit()
             await session.refresh(new_property)
-            node = await session.execute(
-                select(Node).filter(Node.id == parent_node_id)
-            )
+            node = await session.execute(select(Node).filter(Node.id == parent_node_id))
             node = node.scalar()
         return node, new_property
 
     async def delete_node(self, node_id_list: List[int]) -> bool:
         async with async_session() as session:
-            await session.execute(
-                delete(Node).where(Node.id.in_(node_id_list))
-            )
+            await session.execute(delete(Node).where(Node.id.in_(node_id_list)))
             await session.commit()
             return True
 

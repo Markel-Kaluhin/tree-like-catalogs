@@ -3,12 +3,18 @@ from typing import List, Optional
 from sqlalchemy.engine import Row
 
 from helpers.models.non_flat_attrs import Property
-from helpers.schemas.non_flat_attrs.schema import NonFlatAttrsPropertySchema, NonFlatAttrsNodeSchema
+from helpers.schemas.non_flat_attrs.schema import (
+    NonFlatAttrsNodeSchema,
+    NonFlatAttrsPropertySchema,
+)
 
 
 class NonFlatAttrsFactory:
     def serialize(
-        self, non_flat_attrs_list: List[Row], non_flat_attrs_property: Property, path: List[str]
+        self,
+        non_flat_attrs_list: List[Row],
+        non_flat_attrs_property: Property,
+        path: List[str],
     ) -> NonFlatAttrsNodeSchema:
         path = path[:]
         for index, (
@@ -31,7 +37,9 @@ class NonFlatAttrsFactory:
                     name=node_name,
                     created_at=node_created_at,
                 )
-                properties = self.__get_properties(non_flat_attrs_list, non_flat_attrs_node_id)
+                properties = self.__get_properties(
+                    non_flat_attrs_list, non_flat_attrs_node_id
+                )
                 if non_flat_attrs_property:
                     properties = [
                         i for i in properties if i.name == non_flat_attrs_property.name
@@ -51,12 +59,16 @@ class NonFlatAttrsFactory:
                         name=node_name,
                         created_at=node_created_at,
                     )
-                    node.properties = self.__get_properties(non_flat_attrs_list, non_flat_attrs_node_id)
+                    node.properties = self.__get_properties(
+                        non_flat_attrs_list, non_flat_attrs_node_id
+                    )
                     if node.id not in [i.id for i in parent_node.children]:
                         parent_node.children.append(node)
         return root
 
-    def __get_properties(self, non_flat_attrs_list: List[Row], _non_flat_attrs_node_id: int):
+    def __get_properties(
+        self, non_flat_attrs_list: List[Row], _non_flat_attrs_node_id: int
+    ):
         result = []
         for (
             _,
@@ -71,7 +83,10 @@ class NonFlatAttrsFactory:
             property_created_at,
             property_updated_at,
         ) in non_flat_attrs_list:
-            if _non_flat_attrs_node_id is not None and non_flat_attrs_node_id == _non_flat_attrs_node_id:
+            if (
+                _non_flat_attrs_node_id is not None
+                and non_flat_attrs_node_id == _non_flat_attrs_node_id
+            ):
                 result.append(
                     NonFlatAttrsPropertySchema(
                         id=property_id,

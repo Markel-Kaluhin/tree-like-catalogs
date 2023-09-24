@@ -20,7 +20,7 @@ The project showcases a data management system for components of complex assembl
 1. Node Creation and Modification
    - **Description**: Capability to create, edit, and manage nodes representing individual components or sub-assemblies within the system.
    - **Implementation**: API endpoints allowing for the creation and modification of nodes and their attributes.
- 
+
 1. Relationship Mapping
    - **Description**: Mapping and managing relationships between different components, providing insights into the structure of complex assemblies.
    - **Implementation**: Enabling the creation and visualization of relationships between nodes within the tree structure.

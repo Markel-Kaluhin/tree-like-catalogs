@@ -1,11 +1,17 @@
 <div>
   <div class="offcanvas-header">
-    <h4 class="offcanvas-title" id="offcanvas-basic-title">Create new Property</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="activeOffCanvas.dismiss()"></button>
+    <h4 class="offcanvas-title" id="offcanvas-basic-title">
+      Create new Property
+    </h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeOffCanvas.dismiss()"
+    ></button>
   </div>
   <form (ngSubmit)="save()" [formGroup]="nonFlatAttrsPropertyForm">
     <div class="offcanvas-body">
-
       <div class="mb-3">
         <label for="property-name">Property name</label>
         <div class="input-group">
