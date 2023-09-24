@@ -16,6 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./be
+      SQLALCHEMY_HOST: 0.0.0.0
+      SQLALCHEMY_PORT: 5432
+      SQLALCHEMY_DB_NAME: nonflatattrs
+      SQLALCHEMY_USER: markelkaluhin
+      SQLALCHEMY_PASSWORD: myverystrongpassword
+      APP_HOST: 0.0.0.0
+      APP_PORT: 8000
+      RELOAD_APP: 0
+      ALLOW_ORIGINS: *
+      APPLICATION_NAME: be-non-flat-attrs-example
 
     steps:
     - uses: actions/checkout@v3
