@@ -4,21 +4,21 @@ from helpers.entity.sql_entity import TZDateTime
 from helpers.models import Base
 
 
-class RocketNode(Base):
-    __tablename__ = "rocket_node"
+class Node(Base):
+    __tablename__ = "node"
 
     id = Column(Integer, primary_key=True)
-    parent_id = Column(Integer, ForeignKey("rocket_node.id"), index=True)
+    parent_id = Column(Integer, ForeignKey("node.id"), index=True)
     name = Column(String(256), nullable=False, index=True)
     created_at = Column(TZDateTime, nullable=False, server_default=func.now())
     updated_at = Column(TZDateTime, nullable=False, server_default=func.now())
 
 
-class RocketProperty(Base):
-    __tablename__ = "rocket_property"
+class Property(Base):
+    __tablename__ = "property"
 
     id = Column(Integer, primary_key=True)
-    rocket_node_id = Column(Integer, ForeignKey("rocket_node.id"), index=True)
+    node_id = Column(Integer, ForeignKey("node.id"), index=True)
     name = Column(String(256), nullable=False, index=True)
     value = Column(DECIMAL, nullable=False)
     created_at = Column(TZDateTime, nullable=False, server_default=func.now())

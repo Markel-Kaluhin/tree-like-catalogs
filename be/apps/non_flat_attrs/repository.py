@@ -5,18 +5,18 @@ from sqlalchemy import and_, delete, select
 
 from helpers.entity.sql_engine import async_session
 from helpers.entity.sql_entity import SqlEntity
-from helpers.models.rocket import RocketNode, RocketProperty
-from helpers.schemas.rocket.schema import RockerPropertyCreateSchema
+from helpers.models.non_flat_attrs import Node, Property
+from helpers.schemas.non_flat_attrs.schema import NonFlatAttrsPropertyCreateSchema
 from settings.base import Settings
 
-from .entity import RocketFactory
+from .entity import NonFlatAttrsFactory
 
 
-class RocketRepository:
+class NonFlatAttrsRepository:
     def __init__(
         self,
         model: SqlEntity,
-        factory: RocketFactory,
+        factory: NonFlatAttrsFactory,
         schema: Type[BaseModel],
         config: Settings,
     ) -> None:
@@ -27,13 +27,13 @@ class RocketRepository:
 
     async def get_property_by_latest_node_id(
         self, latest_node_id: int, property_name: str
-    ) -> Optional[RocketProperty]:
+    ) -> Optional[Property]:
         async with async_session() as session:
             result = await session.execute(
-                select(RocketProperty).filter(
+                select(Property).filter(
                     and_(
-                        RocketProperty.rocket_node_id == latest_node_id,
-                        RocketProperty.name == property_name,
+                        Property.node_id == latest_node_id,
+                        Property.name == property_name,
                     )
                 )
             )
@@ -50,15 +50,15 @@ class RocketRepository:
             for index, node_name in enumerate(path):
                 if index == 0:
                     result = await session.execute(
-                        select(RocketNode).filter(RocketNode.name == node_name)
+                        select(Node).filter(Node.name == node_name)
                     )
                     result = result.scalar_one_or_none()
                 else:
                     result = await session.execute(
-                        select(RocketNode).filter(
+                        select(Node).filter(
                             and_(
-                                RocketNode.name == node_name,
-                                RocketNode.parent_id == result.id if result else None,
+                                Node.name == node_name,
+                                Node.parent_id == result.id if result else None,
                             )
                         )
                     )
@@ -73,22 +73,22 @@ class RocketRepository:
     async def get_node_list_by_node_id(node_id: int):
         async with async_session() as session:
             topq = (
-                session.sync_session.query(RocketNode, RocketProperty)
+                session.sync_session.query(Node, Property)
                 .outerjoin(
-                    RocketProperty, RocketProperty.rocket_node_id == RocketNode.id
+                    Property, Property.node_id == Node.id
                 )
-                .filter(RocketNode.id == node_id)
-                .order_by(RocketProperty.rocket_node_id)
+                .filter(Node.id == node_id)
+                .order_by(Property.node_id)
                 .cte("cte", recursive=True)
             )
 
             bottomq = (
-                session.sync_session.query(RocketNode, RocketProperty)
+                session.sync_session.query(Node, Property)
                 .outerjoin(
-                    RocketProperty, RocketProperty.rocket_node_id == RocketNode.id
+                    Property, Property.node_id == Node.id
                 )
-                .join(topq, RocketNode.parent_id == topq.c.id)
-                .order_by(RocketProperty.rocket_node_id)
+                .join(topq, Node.parent_id == topq.c.id)
+                .order_by(Property.node_id)
             )
             recursive_q = topq.union(bottomq)
             q = session.sync_session.query(recursive_q)
@@ -96,28 +96,28 @@ class RocketRepository:
             result = result.all()
             return result
 
-    async def create_node(self, parent_node_id: int, name: str) -> RocketNode:
+    async def create_node(self, parent_node_id: int, name: str) -> Node:
         async with async_session() as session:
-            new_node = RocketNode(parent_id=parent_node_id, name=name)
+            new_node = Node(parent_id=parent_node_id, name=name)
             session.add(new_node)
             await session.commit()
             await session.refresh(new_node)
         return new_node
 
     async def create_property(
-        self, parent_node_id: int, rocket_property: RockerPropertyCreateSchema
-    ) -> Tuple[RocketNode, RocketProperty]:
+        self, parent_node_id: int, property: NonFlatAttrsPropertyCreateSchema
+    ) -> Tuple[Node, Property]:
         async with async_session() as session:
-            new_property = RocketProperty(
-                rocket_node_id=parent_node_id,
-                name=rocket_property.name,
-                value=rocket_property.value,
+            new_property = Property(
+                node_id=parent_node_id,
+                name=property.name,
+                value=property.value,
             )
             session.add(new_property)
             await session.commit()
             await session.refresh(new_property)
             node = await session.execute(
-                select(RocketNode).filter(RocketNode.id == parent_node_id)
+                select(Node).filter(Node.id == parent_node_id)
             )
             node = node.scalar()
         return node, new_property
@@ -125,7 +125,7 @@ class RocketRepository:
     async def delete_node(self, node_id_list: List[int]) -> bool:
         async with async_session() as session:
             await session.execute(
-                delete(RocketNode).where(RocketNode.id.in_(node_id_list))
+                delete(Node).where(Node.id.in_(node_id_list))
             )
             await session.commit()
             return True
@@ -133,7 +133,7 @@ class RocketRepository:
     async def delete_property(self, property_id_list: List[int]) -> bool:
         async with async_session() as session:
             await session.execute(
-                delete(RocketProperty).where(RocketProperty.id.in_(property_id_list))
+                delete(Property).where(Property.id.in_(property_id_list))
             )
             await session.commit()
             return True
