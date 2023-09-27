@@ -1,6 +1,9 @@
 [![Python application](https://github.com/Markel-Kaluhin/tree-like-catalogs/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Markel-Kaluhin/tree-like-catalogs/actions/workflows/build.yml)
 ![Tests Pass Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Markel-Kaluhin/e8d23650144c1dd611a941789d52721a/raw/tree-like-catalogs__tests_passed.json)
 ![Coverage Badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Markel-Kaluhin/e8d23650144c1dd611a941789d52721a/raw/tree-like-catalogs__coverage.json)
+![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
+
+[//]: # (![GitHub Pipenv locked Python version]&#40;https://img.shields.io/github/pipenv/locked/python-version/Markel-Kaluhin/tree-like-catalogs&#41;)
 
 # 🌳 Tree-like Catalogs
 *Designed by Markel Kaluhin 🎨*
